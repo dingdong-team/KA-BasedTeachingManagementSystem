@@ -3,27 +3,19 @@
 	"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 
 <beans>
-	<bean id="loginAction" class="com.dingdong.bishe.action.LoginAction"
-		scope="prototype">
-		<property name="loginService" ref="loginService"></property>
-	</bean>
-	<bean id="loginService" class="com.dingdong.bishe.service.impl.LoginServiceImpl">
-		<property name="userDao" ref="userDao" />
-	</bean>
-
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName">
 			<value>com.mysql.jdbc.Driver</value>
 		</property>
 		<property name="url">
-			<value>jdbc:mysql://localhost:3306/DingdongDB</value>
+			<value>jdbc:mysql://localhost:3306/scutonline?characterEncoding=utf-8</value>
 		</property>
 		<property name="username">
 			<value>root</value>
 		</property>
 		<property name="password">
-			<value>dingdong</value>
+			<value></value>
 		</property>
 
 	</bean>
@@ -35,6 +27,10 @@
 		<property name="mappingResources">
 			<list>
 				<value>com/dingdong/bishe/model/User.hbm.xml</value>
+				<value>com/dingdong/bishe/model/Course.hbm.xml</value>
+				<value>com/dingdong/bishe/model/Syllabus.hbm.xml</value>
+				<value>com/dingdong/bishe/model/TeachingUnit.hbm.xml</value>
+				<value>com/dingdong/bishe/model/LabUnit.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -45,7 +41,80 @@
 		</property>
 	</bean>
 
-	<bean id="userDao" class="com.dingdong.bishe.dao.impl.UserDaoHibernateImpl">
+<!-- user  --> 
+	<bean id="userDaoImpl" class="com.dingdong.bishe.dao.impl.UserDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<!-- service -->
+	<bean id="userServiceImpl" class="com.dingdong.bishe.service.impl.UserServiceImpl">
+		<property name="userDao" ref="userDaoImpl"></property>
+	</bean>
+	
+	<!-- control -->
+	<bean id="userAction" class="com.dingdong.bishe.action.UserAction">
+		<property name="userService" ref="userServiceImpl"></property>
+		<property name="syllabusService" ref="syllabusServiceImpl"></property>
+		<property name="userForm" ref="userForm"></property>
+	</bean>
+	<bean id="userForm" class="com.dingdong.bishe.form.UserForm">
+	</bean>
+<!-- end -->	
+<!-- Syllabus -->
+	<bean id="syllabusDaoImpl" class="com.dingdong.bishe.dao.impl.SyllabusDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- service -->
+	<bean id="syllabusServiceImpl" class="com.dingdong.bishe.service.impl.SyllabusServiceImpl">
+		<property name="syllabusDao" ref="syllabusDaoImpl"></property>
+	</bean>
+	<!-- control -->
+	<bean id="syllabusAction" class="com.dingdong.bishe.action.SyllabusAction">
+		<property name="syllabusService" ref="syllabusServiceImpl"></property>
+	</bean>
+	
+<!-- end -->
+<!-- teaching unit -->
+	<!-- dao -->
+	<bean id="teachingUnitDaoImpl" class="com.dingdong.bishe.dao.impl.TeachingUnitDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- service -->
+	<bean id="teachingUnitServiceImpl" class="com.dingdong.bishe.service.impl.TeachingUnitServiceImpl">
+		<property name="teachingUnitDao" ref="teachingUnitDaoImpl"></property>
+	</bean>
+	<!-- control -->
+	<bean id="teachingUnitAction" class="com.dingdong.bishe.action.TeachingUnitAction">
+		<property name="teachingUnitService" ref="teachingUnitServiceImpl"></property>
+	</bean>
+<!-- end -->
+<!-- lab unit -->
+	<!-- dao -->
+	<bean id="labUnitDaoImpl" class="com.dingdong.bishe.dao.impl.LabUnitDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- service -->
+	<bean id="labUnitServiceImpl" class="com.dingdong.bishe.service.impl.LabUnitServiceImpl">
+		<property name="labUnitDao" ref="labUnitDaoImpl"></property>
+	</bean>
+	<!-- control -->
+	<bean id="labUnitAction" class="com.dingdong.bishe.action.LabUnitAction">
+		<property name="labUnitService" ref="labUnitServiceImpl"></property>
+	</bean>
+<!-- end -->
+<!-- assessment -->
+	<!-- dao -->
+	<bean id="assessmentDaoImpl" class="com.dingdong.bishe.dao.impl.AssessmentDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- service -->
+	<bean id="assessmentServiceImpl" class="com.dingdong.bishe.service.impl.AssessmentServiceImpl">
+		<property name="assessmentDao" ref="assessmentDaoImpl"></property>
+	</bean>
+	<!-- control -->
+	<bean id="assessmentAction" class="com.dingdong.bishe.action.AssessmentAction">
+		<property name="assessmentService" ref="assessmentServiceImpl"></property>
+	</bean>
+<!-- end -->
+	
 </beans> 

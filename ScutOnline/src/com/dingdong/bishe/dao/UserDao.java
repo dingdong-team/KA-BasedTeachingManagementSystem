@@ -1,5 +1,9 @@
 package com.dingdong.bishe.dao;
 
+import java.util.List;
+
+
 public interface UserDao {
-	public boolean validate(String username, String password);
+	public List validate(String account, String password, int role );
+	
 }

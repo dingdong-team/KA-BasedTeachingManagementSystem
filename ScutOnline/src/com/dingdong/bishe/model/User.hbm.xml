@@ -3,11 +3,13 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.dingdong.bishe.model">
-    <class name="User" table="user">
+    <class name="User" table="e_user">
         <id name="id" column="id">
             <generator class="increment"/>
         </id>
-        <property name="username"/>
-        <property name="password"/>
+        <property name="account" column="account" type="string"></property>
+        <property name="role" column="role" type="int"/>
+        <property name="username" column="name" type="string"/>
+        <property name="password" column="password" type="string"/>
     </class>
 </hibernate-mapping>
